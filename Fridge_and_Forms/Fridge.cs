@@ -6,34 +6,25 @@ using System.Threading.Tasks;
 
 namespace Fridge_and_Forms
 {
-    class Fridge
+    public class Fridge
     {
-        public int fridgeHeightWidthDiagonal=0;
-        public int fridgeWidthLengthDiagonal = 0;
-        public int fridgeHeightLengthDiagonal = 0;
-        public int fridgeHeight;
-        public int fridgeWidth;
-        public int fridgeLength;
+        public double HeightWidthDiagonal => Diagonal(Height, Width); 
+        public double WidthLengthDiagonal => Diagonal(Width, Length);
+        public double HeightLengthDiagonal => Diagonal(Height, Length);
+        public double Height { get; set; }
+        public double Width { get; set; }
+        public double Length { get; set; }
 
-        public int FridgeHeightWidthDiagonal(int fridgeHeight, int fridgeWidth)
+        public Fridge(double height, double width, double length)
         {
-            fridgeHeightWidthDiagonal = Sqrt(fridgeHeight ^ 2 + fridgeWidth ^ 2);
-            return fridgeHeightWidthDiagonal;
-        }
-        public int FridgeWidthLengthDiagonal(int fridgeWidth, int fridgeLength)
-        {
-            fridgeWidthLengthDiagonal = Sqrt(fridgeWidth ^ 2 + fridgeLength ^ 2);
-            return fridgeWidthLengthDiagonal;
-        }
-        public int FridgeHeightLengthDiagonal(int fridgeHeight, int fridgeLength)
-        {
-            fridgeHeightLengthDiagonal = Sqrt(fridgeHeight ^ 2 + fridgeLength ^ 2);
-            return fridgeHeightLengthDiagonal;
+            Height = height;
+            Width = width;
+            Length = length;
         }
 
-        private int Sqrt(int v)
+        private double Diagonal(double height, double width)
         {
-            throw new NotImplementedException();
+            return Math.Sqrt(height * height + width * width);
         }
     }
 }

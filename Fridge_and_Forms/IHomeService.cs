@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Fridge_and_Forms
 {
-    class Door : IHomeConstruction
+    public interface IHomeService
     {
-        public void IsOpened()
-        {
-            Console.WriteLine("Door is already open!");
-        }
+        Fridge CreateFridge();
+
+        bool CheckIsSuccessThrow(Fridge fridge);
     }
 }

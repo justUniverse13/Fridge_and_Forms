@@ -8,7 +8,7 @@ namespace Fridge_and_Forms
 {
     class Rectangle:Frame
     {
-      public  int Length;
-      public  int Width;
+        public double Height { get; set; }
+        public double Width { get; set; }
     }
 }

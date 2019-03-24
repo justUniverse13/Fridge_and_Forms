@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Fridge_and_Forms
 {
-    class Circle:Frame
+    class Circle : Frame
     {
-        public int Radius;
+        public double Radius;
     }
 }
