@@ -8,9 +8,9 @@ namespace Fridge_and_Forms
 {
     public class HomeService : IHomeService
     {
-        public Fridge CreateFridge()
+        public Fridge CreateFridgeParalelepiped()
         {
-            Console.WriteLine("Input fridge's parameters.");
+            Console.WriteLine("Input Paralelepiped fridge's parameters.");
             Console.WriteLine("Input fridge's height:");
             var height = Convert.ToDouble(Console.ReadLine());
 
@@ -22,8 +22,27 @@ namespace Fridge_and_Forms
 
             return new Fridge(height, width, length);
         }
+        public Fridge CreateFridgeSphere()
+        {
+            Console.WriteLine("Input Sphere fridge's parameters.");
+            Console.WriteLine("Input fridge's Radius:");
+            var radius = Convert.ToDouble(Console.ReadLine());
 
-        public bool CheckIsSuccessThrow(Fridge fridge)
+            return new Fridge(radius);
+        }
+        public Fridge CreateFridgeCylinder ()
+        {
+            Console.WriteLine("Input Cylinder fridge's parameters.");
+            Console.WriteLine("Input fridge's height:");
+            var height = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine("Input fridge's Radius:");
+            var radius = Convert.ToDouble(Console.ReadLine());
+
+            return new Fridge(height,radius);
+        }
+
+        public bool CheckIsSuccessParalelepipedThrow(Fridge fridge)
         {
             Console.WriteLine("Choose:0 - Circle; other - Rectangle:");
 
@@ -35,7 +54,7 @@ namespace Fridge_and_Forms
             {
                 var rectangle = CreateRectangle();
 
-                isThrow = IsSuccessThrowFrame(fridge, rectangle);
+                isThrow = IsSuccessParalelepipedThrowFrame(fridge, rectangle);
 
                 Console.WriteLine(isThrow ? "Success throw the Rectangle!" : "There is no way to go outside Rectangle!");
             }
@@ -43,7 +62,63 @@ namespace Fridge_and_Forms
             {
                 var circle = CreateCircle();
 
-                isThrow = IsSuccessThrowFrame(fridge, circle);
+                isThrow = IsSuccessParalelepipedThrowFrame(fridge, circle);
+
+                Console.WriteLine(isThrow ? "Success throw the Circle!" : "There is no way to go outside Circle!");
+            }
+
+            return isThrow;
+        }
+
+        public bool CheckIsSuccessSphereThrow(Fridge fridge)
+        {
+            Console.WriteLine("Choose:0 - Circle; other - Rectangle:");
+
+            var choiceCR = Convert.ToInt32(Console.ReadLine());
+
+            bool isThrow;
+
+            if (choiceCR > 0)
+            {
+                var rectangle = CreateRectangle();
+
+                isThrow = IsSuccessSphereThrowFrame(fridge, rectangle);
+
+                Console.WriteLine(isThrow ? "Success throw the Rectangle!" : "There is no way to go outside Rectangle!");
+            }
+            else
+            {
+                var circle = CreateCircle();
+
+                isThrow = IsSuccessSphereThrowFrame(fridge, circle);
+
+                Console.WriteLine(isThrow ? "Success throw the Circle!" : "There is no way to go outside Circle!");
+            }
+
+            return isThrow;
+        }
+
+        public bool CheckIsSuccessCelinderThrow(Fridge fridge)
+        {
+            Console.WriteLine("Choose:0 - Circle; other - Rectangle:");
+
+            var choiceCR = Convert.ToInt32(Console.ReadLine());
+
+            bool isThrow;
+
+            if (choiceCR > 0)
+            {
+                var rectangle = CreateRectangle();
+
+                isThrow = IsSuccessCelinderThrowFrame(fridge, rectangle);
+
+                Console.WriteLine(isThrow ? "Success throw the Rectangle!" : "There is no way to go outside Rectangle!");
+            }
+            else
+            {
+                var circle = CreateCircle();
+
+                isThrow = IsSuccessCelinderThrowFrame(fridge, circle);
 
                 Console.WriteLine(isThrow ? "Success throw the Circle!" : "There is no way to go outside Circle!");
             }
@@ -75,7 +150,7 @@ namespace Fridge_and_Forms
             return rectangle;
         }
 
-        private bool IsSuccessThrowFrame(Fridge fridge, Frame frame)
+        private bool IsSuccessParalelepipedThrowFrame(Fridge fridge, Frame frame)
         {
             if(frame is Circle circle)
             {
@@ -92,6 +167,36 @@ namespace Fridge_and_Forms
 
             return false;
         }
+        private bool IsSuccessSphereThrowFrame(Fridge fridge, Frame frame)
+        {
+            if (frame is Circle circle)
+            {
+                return ComparisonRadiusesSphereCircle(fridge.Radius, circle);
+            }
+            else if (frame is Rectangle rectangle)
+            {
+                return ComparisonDiagonalRectangleRadiusSphere(fridge.Radius, rectangle);
+            }
+
+            return false;
+        }
+
+        private bool IsSuccessCelinderThrowFrame(Fridge fridge, Frame frame)
+        {
+            if (frame is Circle circle)
+            {
+                return (ComparisonRadiusesCircleCelinder(fridge.Radius, circle))||(IsSuccessThrowCircle(2*fridge.Radius,circle));
+            }
+            else if (frame is Rectangle rectangle)
+            {
+                return (ComparisonCelinderRadiusRectangle(fridge.Radius, rectangle))
+                    ||(ComparisonCelinderParametrsRectangle(fridge.Radius,fridge.Height,rectangle));
+            }
+
+            return false;
+        }
+
+
 
         private bool IsSuccessThrowRectangle(double height, double width, Rectangle rectangle)
         {
@@ -101,6 +206,27 @@ namespace Fridge_and_Forms
         private bool IsSuccessThrowCircle(double diagonal, Circle circle)
         {
             return diagonal <= 2 * circle.Radius;
+        }
+        private bool ComparisonRadiusesSphereCircle(double radius,Circle circle)
+        {
+            return radius < circle.Radius;
+        }
+        private bool ComparisonDiagonalRectangleRadiusSphere(double radius,Rectangle rectangle)
+        {
+            return rectangle.HeightWidthDiagonal > 2 * radius;
+        }
+        private bool ComparisonRadiusesCircleCelinder(double radius, Circle circle)
+        {
+            return radius<circle.Radius;
+        }
+        private bool ComparisonCelinderRadiusRectangle(double radius,Rectangle rectangle)
+        {
+            return ( radius < rectangle.Width )|| ( radius < rectangle.Height);
+        }
+        private bool ComparisonCelinderParametrsRectangle(double radius, double height, Rectangle rectangle)
+        {
+            return 2*radius < rectangle.Height && height < rectangle.Width
+                || height < rectangle.Height && 2 * radius < rectangle.Width;
         }
     }
 }

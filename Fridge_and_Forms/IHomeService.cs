@@ -8,8 +8,12 @@ namespace Fridge_and_Forms
 {
     public interface IHomeService
     {
-        Fridge CreateFridge();
+        Fridge CreateFridgeParalelepiped();
+        Fridge CreateFridgeSphere();
+        Fridge CreateFridgeCylinder();
 
-        bool CheckIsSuccessThrow(Fridge fridge);
+        bool CheckIsSuccessParalelepipedThrow(Fridge fridge);
+        bool CheckIsSuccessSphereThrow(Fridge fridge);
+        bool CheckIsSuccessCelinderThrow(Fridge fridge);
     }
 }

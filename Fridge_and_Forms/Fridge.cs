@@ -14,6 +14,7 @@ namespace Fridge_and_Forms
         public double Height { get; set; }
         public double Width { get; set; }
         public double Length { get; set; }
+        public double Radius { get; set; }
 
         public Fridge(double height, double width, double length)
         {
@@ -21,7 +22,15 @@ namespace Fridge_and_Forms
             Width = width;
             Length = length;
         }
-
+        public Fridge(double radius)
+        {
+            Radius = radius;
+        }
+        public Fridge(double radius,double height)
+            :this(radius)
+        {
+            Height = height;
+        }
         private double Diagonal(double height, double width)
         {
             return Math.Sqrt(height * height + width * width);
